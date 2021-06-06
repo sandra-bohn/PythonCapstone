@@ -1,8 +1,8 @@
 import json
 import string
 
-filename = '/home/sandra/Documents/CodingNomads/capstone/outputs/climate-change_tweets.json'
-output = '/home/sandra/Documents/CodingNomads/capstone/outputs/climate-change_tweets_summary.txt'
+filename = 'climate-change_tweets.json'
+output = 'climate-change_tweets_summary.txt'
 
 # import tweet file
 with open(filename, 'r') as f:

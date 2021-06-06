@@ -5,7 +5,6 @@ import time
 
 db_name = 'climate_change_tweets'
 search_term = 'climate change'
-output_tweets = '/home/sandra/Documents/CodingNomads/capstone/outputs/climate-change_tweets.json'
 tweet_limit = 5000
 batch_size = 500
 
