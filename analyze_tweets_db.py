@@ -25,7 +25,7 @@ nonsymbols = string.ascii_letters + string.digits
 count_punctuated = 0
 
 join_statement = tweets.join(users, users.columns.user_id == tweets.columns.user_id)
-query = sqlalchemy.select([tweets.columns.text]).select_from(join_statement)
+query = sqlalchemy.select(tweets.columns.text)
 result_proxy = connection.execute(query)
 data = result_proxy.fetchall()
 
