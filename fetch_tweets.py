@@ -1,3 +1,23 @@
+"""
+fetch_tweets.py is a command line script designed to search Twitter
+using a Twitter development account and the tweepy package.
+Twitter access keys are saved as environmental variables capstoneAPI,
+capstoneAPISecret, capstoneAccess, and capstoneAccessSecret.
+
+Tweets are downloaded in batches (batch_size) every 15 minutes to
+comply with Twitter rate limits. The total number of tweets downloaded
+is determined by the tweet_limit. The search_term is the word or
+phrase used to search Twitter.
+
+Downloaded tweets are saved in a json file (output_tweets) for later
+analysis.
+
+This script uses the default tweet length, which truncates all tweets
+after the first 140 characters.
+
+Required packages: tweepy
+"""
+
 import os
 import tweepy
 import json
