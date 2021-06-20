@@ -1,6 +1,6 @@
 # PythonCapstone
-These scripts were created for my CodingNomads Python development capstone course. The "fetch_tweets" scripts search Twitter for tweets containing a phrase, in this case "climate change", and store tweets in either a .json file or MySQL database.<p> 
-The "analyze_tweets" scripts analyze the stored tweets for various characteristics, such as average length and most common words and symbols found in the tweets. The json analysis script writes a summary of the analysis to a text file and the database analysis script stores the metrics in the database, indexed by the time when the analysis was completed.<p>
+These scripts were created for my CodingNomads Python development course capstone project. All scripts are designed to be run from the command line. First, the "fetch_tweets" scripts search Twitter for tweets containing a phrase, in this case "climate change", and store tweets in either a .json file (fetch_tweets.py) or MySQL database (fetch_tweets_db.py).<p> 
+Then, the "analyze_tweets" scripts analyze the stored tweets for various characteristics, such as average length and most common words and symbols found in the tweets. The json analysis script (analyze_tweets_json.py) writes a summary of the analysis to a text file and the database analysis script (analyze_tweets_db.py) stores the metrics in the database, indexed by the time when the analysis was completed.<p>
 The following results were generated from over 5,000 tweets accessed on June 5, 2021 using the figures.py script.<p>
 ## Word Cloud
 ![Word cloud of text from climate change tweets](tweet_cloud.png)
