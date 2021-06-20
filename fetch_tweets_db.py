@@ -16,7 +16,7 @@ saved in the environmental variable mySQLpwd.
 This script uses the default tweet length, which truncates all tweets
 after the first 140 characters.
 
-Required packages: tweepy, SQLalchemy
+Required packages: tweepy, SQLalchemy, MySQL
 """
 
 import os

@@ -40,7 +40,8 @@ tweet_list = []
 while len(tweet_list) < tweet_limit:
     for tweet in tweepy.Cursor(api.search, q=search_term, lang="en", since=2021-1-1).items(batch_size):
         tweet_list.append(tweet._json)
-    time.sleep(60 * 15)
+    if len(tweet_list) < tweet_limit:
+        time.sleep(60 * 15)
 
 # write tweet data to a JSON file
 with open(output_tweets, 'w') as f:

@@ -22,7 +22,7 @@ Tweets are retrieved from a MySQL database (db_name) using the
 package SQLalchemy. MySQL user is set to root and MySQL password is
 saved in the environmental variable mySQLpwd.
 
-Required package: sqlalchemy
+Required package: sqlalchemy, MySQL
 """
 import os
 from sqlalchemy import create_engine, MetaData, Table, select, func, \
