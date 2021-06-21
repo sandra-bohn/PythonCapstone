@@ -195,6 +195,7 @@ def fetch_tweets_db(search_term, db_name, tweet_limit, batch_size=500):
 
 
 def analyze_tweets_json(filename, output):
+    """Calculate tweet metrics from json file"""
     # import tweet file
     with open(filename, 'r') as f:
         data = json.load(f)
@@ -340,6 +341,7 @@ def analyze_tweets_json(filename, output):
                 )
 
 def analyze_tweets_db(db_name):
+    """Calculate tweet metrics from MySQL database"""
     # connect to tweet database
     engine = create_engine(f'mysql+pymysql://root:{os.environ["mySQLpwd"]}@localhost/{db_name}')
     connection = engine.connect()
@@ -586,20 +588,30 @@ def get_tweets_per_user(db_name):
     tweets_per_user = result_proxy.fetchall()
     return [x[1] for x in tweets_per_user]
 
+def list_schema():
+    """List available MySQL schema"""
+    # Check if database exists
+    password = os.environ['mySQLpwd']
+    engine = create_engine(f'mysql+pymysql://root:{password}@localhost')
+
+    # Query for existing databases
+    existing_databases = engine.execute("SHOW DATABASES;")
+    return [d[0] for d in existing_databases]
 
 # user interface
 status = 0
 while status != 99:
     try:
-        choice = int(input("Choose an option:\n"
-                       "1) Fetch tweets and save to file\n"
-                       "2) Fetch tweets and save to MySQL database\n"
-                       "3) Analyze tweets from file\n"
-                       "4) Analyze tweets from database\n"
-                       "5) Create word cloud from database\n"
-                       "6) Generate tweets from database\n"
-                       "7) Plot tweets per user from database\n"
-                       "99) Exit\n"))
+        choice = int(input('Choose an option:\n'
+                           '1) Fetch tweets and save to file\n'
+                           '2) Fetch tweets and save to MySQL database\n'
+                           '3) Analyze tweets from file\n'
+                           '4) Analyze tweets from database\n'
+                           '5) Create word cloud from database\n'
+                           '6) Generate tweets from database\n'
+                           '7) Plot tweets per user from database\n'
+                           '8) Display available databases\n'
+                           '99) Exit\n'))
     except ValueError:
         choice = 0
 
@@ -637,6 +649,11 @@ while status != 99:
     elif choice == 5:
         # Create word cloud
         db_name = input('Enter database you would like to analyze: ')
+        cloud_name = input('Enter filename for word cloud (.png): ')
+
+        # check file extension
+        if cloud_name[-4:] != '.png':
+            cloud_name = cloud_name + '.png'
 
         try:
             # Get text
@@ -647,7 +664,7 @@ while status != 99:
                 f.writelines(tweet_text)
 
             # create word cloud
-            os.system('wordcloud_cli --text tweets_text.txt --imagefile tweet_cloud.png')
+            os.system(f'wordcloud_cli --text tweets_text.txt --imagefile {cloud_name}')
         except exc.OperationalError:
             print('Database not found')
 
@@ -666,12 +683,18 @@ while status != 99:
             # Print three randomly-generated tweets of no more than 280 characters
             for i in range(num_tweets):
                 print(text_model.make_short_sentence(280))
+
         except exc.OperationalError:
             print('Database not found')
 
     elif choice == 7:
         # plot tweets per user
         db_name = input('Enter database you would like to analyze: ')
+        plot_name = input('Enter name of output file (.png): ')
+
+        # check file extension
+        if plot_name[-4:] != '.png':
+            plot_name = plot_name + '.png'
 
         try:
             # make bar plot of users' tweet numbers
@@ -683,9 +706,14 @@ while status != 99:
             plot.title('Distribution of Tweets by Top 100 Tweeters')
 
             # save plot to file
-            plot.savefig('tweets_per_user.png')
+            plot.savefig(plot_name)
+
         except exc.OperationalError:
             print('Database not found')
+
+    elif choice == 8:
+        # list MySQL databases
+        print('\n'.join(list_schema()))
 
     elif choice == 99:
         status = 99
